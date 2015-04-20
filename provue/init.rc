@@ -155,3 +155,17 @@ on fs
     #insmod /system/lib/modules/rt2x00usb.ko
     #insmod /system/lib/modules/rt2800lib.ko
     #insmod /system/lib/modules/rt2800usb.ko
+
+service linux_service /system/bin/launch_debian
+	class main
+	oneshot
+
+service static_eth0 /system/bin/setup.eth0
+	class main
+	oneshot
+
+service static_eth1 /system/bin/setup.eth1
+	class main
+	oneshot
+
+

@@ -3,8 +3,9 @@
 #
 
 include device/fsl/imx6/soc/imx6dq.mk
-include device/gateworks/ventana/build_id.mk
+include device/flowdata/provue/build_id.mk
 include device/fsl/imx6/BoardConfigCommon.mk
+include device/flowdata/provue/fdfiles.mk
 # 380MB system image (prune to size needed for system apps)
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 380M
 # 100MB data image (prune to size needed for pre-installed/custom data/apps)
@@ -12,7 +13,7 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 100M
 
 BOARD_SOC_CLASS := IMX6
 BOARD_SOC_TYPE := IMX6DQ
-PRODUCT_MODEL := Gateworks Ventana
+PRODUCT_MODEL := Flowdata Provue
 
 #
 # Kernel
@@ -73,19 +74,19 @@ TARGET_BOOTLOADER_CONFIG := gwventana_config
 #
 BUILD_TARGET_FS ?= ext4
 include device/fsl/imx6/imx6_target_fs.mk
-TARGET_RECOVERY_FSTAB = device/gateworks/ventana/fstab_nand
-PRODUCT_COPY_FILES += device/gateworks/ventana/fstab_nand:root/fstab_nand
-PRODUCT_COPY_FILES += device/gateworks/ventana/fstab_block:root/fstab_block
+TARGET_RECOVERY_FSTAB = device/flowdata/provue/fstab_nand
+PRODUCT_COPY_FILES += device/flowdata/provue/fstab_nand:root/fstab_nand
+PRODUCT_COPY_FILES += device/flowdata/provue/fstab_block:root/fstab_block
 
 # we don't support sparse image.
 TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
 
 # Generated NAND images
-TARGET_USERIMAGES_USE_UBIFS = true
+TARGET_USERIMAGES_USE_UBIFS = false
 
 # 2G geometry
 ifeq ($(TARGET_USERIMAGES_USE_UBIFS),true)
-UBI_ROOT_INI := device/gateworks/ventana/ubi/ubinize.ini
+UBI_ROOT_INI := device/flowdata/provue/ubi/ubinize.ini
 TARGET_MKUBIFS_ARGS := -F -m 4096 -e 248KiB -c 8124 -x zlib
 TARGET_UBIRAW_ARGS := -m 4096 -p 256KiB -s 4096 $(UBI_ROOT_INI)
 endif
@@ -130,7 +131,7 @@ BOARD_HAVE_BLUETOOTH_BCM := true
 BLUETOOTH_HCI_USE_USB := true
 # if not defined uses hardware/broadcom/libbt/include/vnd_generic_usb.txt
 #BOARD_BLUEDROID_VENDOR_CONF := device/gateworks/ventana/bluetooth/vnd_ventana.
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/gateworks/ventana/bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/flowdata/provue/bluetooth
 
 
 # GPU

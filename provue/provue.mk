@@ -1,35 +1,35 @@
 # This is a FSL Android Reference Design platform based on i.MX6Q ARD board
 # It will inherit from FSL core product which in turn inherit from Google generic
 
-$(call inherit-product, device/gateworks/ventana/imx6.mk)
+$(call inherit-product, device/flowdata/provue/imx6.mk)
 $(call inherit-product-if-exists,vendor/google/products/gms.mk)
 
 # Overrides
-PRODUCT_NAME := ventana
-PRODUCT_DEVICE := ventana
-PRODUCT_BRAND := Gateworks
+PRODUCT_NAME := provue
+PRODUCT_DEVICE := provue
+PRODUCT_BRAND := Flowdata
 PRODUCT_MANUFACTURER := Gateworks
 
 # Files to copy to the root (ramdisk) and system (rom) filesystems
 PRODUCT_COPY_FILES += \
-	device/gateworks/ventana/required_hardware.xml:system/etc/permissions/required_hardware.xml \
-	device/gateworks/ventana/init.rc:root/init.freescale.rc \
-	device/gateworks/ventana/audio_policy.conf:system/etc/audio_policy.conf \
-	device/gateworks/ventana/audio_effects.conf:system/vendor/etc/audio_effects.conf \
-	device/gateworks/ventana/init.sh:system/bin/init.sh
+	device/flowdata/provue/required_hardware.xml:system/etc/permissions/required_hardware.xml \
+	device/flowdata/provue/init.rc:root/init.freescale.rc \
+	device/flowdata/provue/audio_policy.conf:system/etc/audio_policy.conf \
+	device/flowdata/provue/audio_effects.conf:system/vendor/etc/audio_effects.conf \
+	device/flowdata/provue/init.sh:system/bin/init.sh
 
 PRODUCT_COPY_FILES +=	\
 	external/linux-firmware-imx/firmware/vpu/vpu_fw_imx6d.bin:system/lib/firmware/vpu/vpu_fw_imx6d.bin 	\
 	external/linux-firmware-imx/firmware/vpu/vpu_fw_imx6q.bin:system/lib/firmware/vpu/vpu_fw_imx6q.bin
 
 PRODUCT_COPY_FILES +=	\
-	device/gateworks/common/input/gsc_input.kl:system/usr/keylayout/gsc_input.kl \
-	device/gateworks/common/input/tca8418.kl:system/usr/keylayout/tca8418.kl \
-	device/gateworks/common/input/Goodix_Capacitive_TouchScreen.idc:system/usr/idc/Goodix_Capacitive_TouchScreen.idc \
-	device/gateworks/common/input/EP0810M09.idc:system/usr/idc/EP0810M09.idc \
-	device/gateworks/common/input/TSC2007_Touchscreen.idc:system/usr/idc/TSC2007_Touchscreen.idc
+	device/flowdata/common/input/gsc_input.kl:system/usr/keylayout/gsc_input.kl \
+	device/flowdata/common/input/tca8418.kl:system/usr/keylayout/tca8418.kl \
+	device/flowdata/common/input/Goodix_Capacitive_TouchScreen.idc:system/usr/idc/Goodix_Capacitive_TouchScreen.idc \
+	device/flowdata/common/input/EP0810M09.idc:system/usr/idc/EP0810M09.idc \
+	device/flowdata/common/input/TSC2007_Touchscreen.idc:system/usr/idc/TSC2007_Touchscreen.idc
 
-DEVICE_PACKAGE_OVERLAYS := device/gateworks/ventana/overlay
+DEVICE_PACKAGE_OVERLAYS := device/flowdata/provue/overlay
 
 PRODUCT_CHARACTERISTICS := tablet
 

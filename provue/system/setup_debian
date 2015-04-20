@@ -1,0 +1,16 @@
+#!/system/bin/sh
+start sshd
+export PATH=$PATH:/bin:/usr/bin:/system/bin
+
+[ -d /debian/etc ] || /system/bin/mount -t ext4 -o noatime,nodiratime /dev/block/sda10 /debian
+[ -d /debian/var/log ] || /system/bin/mount -t ext4 -o noatime,nodiratime /dev/block/sda11 /debian/var
+if [ -e /debian/dev/tty ];
+  then
+    echo "Found /dev"
+  else
+    /system/bin/mount -o bind /dev /debian/dev
+    /system/bin/mount -o bind /dev/pts /debian/dev/pts
+  fi
+[ -d /debian/sys/block ] || /system/bin/mount -o bind /sys /debian/sys
+[ -d /debian/proc/fs ] || /system/bin/mount -o bind /proc /debian/proc
+

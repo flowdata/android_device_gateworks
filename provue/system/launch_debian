@@ -1,0 +1,12 @@
+#!/system/bin/sh
+
+export PATH=$PATH:/bin:/usr/bin:/system/bin
+
+source /system/bin/setup_debian
+
+/system/bin/busybox chroot /debian /etc/init.d/postgresql start
+/system/bin/busybox chroot /debian /etc/init.d/apache2 restart
+/system/bin/busybox chroot /debian /etc/init.d/ssh start
+
+echo -1000 > /proc/`cat /debian/run/postgresql/9.1-main.pid`/oom_score_adj
+echo -1000 > /proc/`cat /debian/run/apache2.pid`/oom_score_adj

@@ -27,4 +27,4 @@
 # Copied from build/target/product/AndroidProducts.mk
 
 PRODUCT_MAKEFILES := \
-  $(LOCAL_DIR)/ventana/ventana.mk \
+  $(LOCAL_DIR)/provue/provue.mk \
