@@ -27,4 +27,5 @@ PRODUCT_COPY_FILES += \
 
 # files in media folder
 PRODUCT_COPY_FILES += \
-	device/flowdata/provue/media/bootanimation.zip:system/media/bootanimation.zip
+	device/flowdata/provue/media/bootanimation.zip:system/media/bootanimation.zip \
+	device/flowdata/provue/gpio-20.kl:data/system/devices/keylayout/gpio-20.kl

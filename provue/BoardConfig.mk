@@ -82,7 +82,7 @@ PRODUCT_COPY_FILES += device/flowdata/provue/fstab_block:root/fstab_block
 TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
 
 # Generated NAND images
-TARGET_USERIMAGES_USE_UBIFS = false
+#TARGET_USERIMAGES_USE_UBIFS = false
 
 # 2G geometry
 ifeq ($(TARGET_USERIMAGES_USE_UBIFS),true)

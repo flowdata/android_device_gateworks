@@ -168,4 +168,8 @@ service static_eth1 /system/bin/setup.eth1
 	class main
 	oneshot
 
+service coreshim /system/bin/coreshim
+	class core
+	user root
+	group root
 
