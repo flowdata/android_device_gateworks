@@ -1,0 +1,5 @@
+#!/system/bin/sh
+
+R0=$(i2cget -f -y 0 0x20 0) && R0=$(($R0 & ~0x01)) && i2cset -f -y 0 0x20 0 $R0 || exit 1
+echo 240 > /sys/class/gpio/export
+exit 0
