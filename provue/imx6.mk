@@ -57,8 +57,6 @@ PRODUCT_PACKAGES += \
 	sqlite3					\
 	libefence				\
 	powerdebug				\
-	i2c-tools				\
-	TSCalibration				\
 	openssl					\
 	zlib					\
 	dropbear				\
@@ -73,8 +71,12 @@ PRODUCT_PACKAGES += \
 	ssh-keygen				\
 	sshd_config				\
 	start-ssh				\
-	coreshim
-
+	coreshim				\
+	i2cdetect				\
+	i2cget					\
+	i2cset					\
+	i2cdump					\
+	TSCalibration
 
 # CANbus utils
 PRODUCT_PACKAGES += \
