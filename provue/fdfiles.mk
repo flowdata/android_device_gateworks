@@ -27,6 +27,7 @@ PRODUCT_COPY_FILES += \
         device/flowdata/provue/system/stop_adbd:system/bin/stop_adbd \
         device/flowdata/provue/system/start_adbd:system/bin/start_adbd \
         device/flowdata/provue/system/provue_uptime:system/bin/provue_uptime \
+        device/flowdata/provue/system/setup_button:system/bin/setup_button \
 
 # files in media folder
 PRODUCT_COPY_FILES += \

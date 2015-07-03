@@ -115,6 +115,7 @@ on boot
 
     # mount the debugfs
     mount debugfs none /sys/kernel/debug/
+    write /sys/power/wake_lock neversleep
 
     # ensure any user init script is executable
     chmod 0755 /data/bin/init.sh

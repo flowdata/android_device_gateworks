@@ -4,14 +4,17 @@ export PATH=$PATH:/bin:/usr/bin:/system/bin
 
 #source /system/bin/setup_debian
 
+/system/bin/stop
 /system/bin/busybox chroot /debian /etc/init.d/postgresql stop
 /system/bin/busybox chroot /debian /etc/init.d/apache2 stop
 /system/bin/busybox chroot /debian /etc/init.d/cron stop
 /system/bin/busybox chroot /debian /etc/init.d/ssh stop
+/system/bin/mount -o remount,ro /debian/var
 /system/bin/mount -o remount,ro /debian
 /system/bin/mount -o remount,ro /data
 /system/bin/mount -o remount,ro /cache
 /system/bin/mount -o remount,ro /system
-echo on > /sys/power/state
-echo mem > /sys/power/state
+#echo on > /sys/power/state
+#echo mem > /sys/power/state
+sync && echo 300 > /sys/devices/soc0/soc.1/2100000.aips-bus/21a0000.i2c/i2c-0/0-0020/powerdown
 
