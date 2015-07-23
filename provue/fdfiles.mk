@@ -28,6 +28,8 @@ PRODUCT_COPY_FILES += \
         device/flowdata/provue/system/start_adbd:system/bin/start_adbd \
         device/flowdata/provue/system/provue_uptime:system/bin/provue_uptime \
         device/flowdata/provue/system/setup_button:system/bin/setup_button \
+        device/flowdata/provue/system/launch_spel:system/bin/launch_spel \
+        device/flowdata/provue/system/com.adobe.reader-1.apk:system/app/Reader.apk \
 
 # files in media folder
 PRODUCT_COPY_FILES += \

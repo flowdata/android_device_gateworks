@@ -174,3 +174,7 @@ service coreshim /system/bin/coreshim
 	user root
 	group root
 
+service spel /system/bin/logwrapper /system/bin/launch_spel
+    class late_start
+    user root
+    group root
