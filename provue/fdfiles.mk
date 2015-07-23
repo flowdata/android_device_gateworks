@@ -29,9 +29,20 @@ PRODUCT_COPY_FILES += \
         device/flowdata/provue/system/provue_uptime:system/bin/provue_uptime \
         device/flowdata/provue/system/setup_button:system/bin/setup_button \
         device/flowdata/provue/system/launch_spel:system/bin/launch_spel \
-        device/flowdata/provue/system/com.adobe.reader-1.apk:system/app/Reader.apk \
 
 # files in media folder
 PRODUCT_COPY_FILES += \
 	device/flowdata/provue/media/bootanimation.zip:system/media/bootanimation.zip \
 	device/flowdata/provue/gpio-20.kl:data/system/devices/keylayout/gpio-20.kl
+
+LOCAL_PATH := $(call my-dir)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := Reader
+LOCAL_SOURCE_FILES := system/$(LOCAL_MODULE).apk
+LOCAL_MODULE_CLASS := APPS
+LOCAL_MODULE_SUFFIX := $(COMMON_ANDROID_PACKAGE_SUFFIX)
+LOCAL_MODULE_TAGS := optional
+LOCAL_CERTIFICATE := PRESIGNED
+
+include $(BUILD_PREBUILT)

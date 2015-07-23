@@ -23,6 +23,7 @@ PRODUCT_PACKAGES += \
 	WfdSink                                 \
 	wfd                                     \
 	ethernet                                \
+	Reader					\
 	libfsl_wfd.so                           \
 	fsl.imx.jar                             \
 	hwcomposer_fsl.imx6.so                  \
