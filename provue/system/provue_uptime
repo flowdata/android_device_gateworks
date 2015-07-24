@@ -2,7 +2,7 @@
 
 export PATH=$PATH:/bin:/usr/bin:/system/bin
 busybox echo -ne \<br /\>SQL Status: \\c 
-busybox chroot /debian /etc/init.d/postgresql statusa
+busybox chroot /debian /etc/init.d/postgresql status
 busybox echo -ne \<br /\>Apache2 Status: \\c
 busybox chroot /debian /etc/init.d/apache2 status
 
