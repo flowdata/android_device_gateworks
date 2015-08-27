@@ -178,3 +178,8 @@ service spel /system/bin/logwrapper /system/bin/launch_spel
     class late_start
     user root
     group root
+
+service apache2 /system/bin/logwrapper /system/bin/launch_apache
+    class late_start
+    user root
+    group root

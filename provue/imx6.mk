@@ -13,20 +13,14 @@ PRODUCT_PACKAGES += \
 	MagicSmokeWallpapers			\
 	Gallery2				\
 	Gallery		    			\
-	SoundRecorder				\
-	Camera2					\
-	Camera					\
-	LegacyCamera                            \
 	Email					\
 	FSLOta					\
-	CactusPlayer                            \
 	WfdSink                                 \
 	wfd                                     \
 	ethernet                                \
 	libfsl_wfd.so                           \
 	fsl.imx.jar                             \
 	hwcomposer_fsl.imx6.so                  \
-	VideoEditor				\
 	FSLProfileApp				\
 	FSLProfileService			\
 	VisualizationWallpapers			\
@@ -48,6 +42,13 @@ PRODUCT_PACKAGES += \
 	display_mode_fb0.conf                   \
 	display_mode_fb2.conf                   \
 	display_mode_fb4.conf
+
+	#SoundRecorder				\
+	Camera2					\
+	Camera					\
+	LegacyCamera                            \
+	CactusPlayer                            \
+	VideoEditor				\
 
 # Debug utils
 PRODUCT_PACKAGES += \

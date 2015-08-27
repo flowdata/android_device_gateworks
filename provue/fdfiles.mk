@@ -29,6 +29,7 @@ PRODUCT_COPY_FILES += \
         device/flowdata/provue/system/provue_uptime:system/bin/provue_uptime \
         device/flowdata/provue/system/setup_button:system/bin/setup_button \
         device/flowdata/provue/system/launch_spel:system/bin/launch_spel \
+        device/flowdata/provue/system/launch_apache:system/bin/launch_apache \
         device/flowdata/provue/system/setdate:system/bin/setdate \
 
 # files in media folder
