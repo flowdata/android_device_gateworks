@@ -17,6 +17,6 @@ $BD1	/boot        ext4    defaults                                              
 $BD2	/recovery    ext4    defaults                                                                         defaults
 $BD9	/misc        ext4    defaults                                                                         defaults
 $BD10	/debian        ext4    discard,nodiratime,noatime,defaults                                                                         defaults
-$BD11	/debian/var        ext4    discard,nosuid,nodev,nodiratime,noatime,noauto_da_alloc                                                                        wait
+$BD11	/debian/data        ext4    discard,nosuid,nodev,nodiratime,noatime,noauto_da_alloc                                                                        wait
 # uncomment if you wish to utilize NAND storage (must have valid ubi)
 #/dev/ubi0_0     /mnt/media_rw/nand      ubifs 	ro                                      wait
