@@ -2,6 +2,8 @@
 
 export PATH=$PATH:/bin:/usr/bin:/system/bin
 
+sleep 10
+
 source /system/bin/setup_debian
 
 /system/bin/busybox chroot /debian /usr/sbin/apachectl -D NO_DETACH -k start
