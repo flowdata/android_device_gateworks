@@ -2,6 +2,9 @@
 
 export PATH=$PATH:/bin:/usr/bin:/system/bin
 
+/system/bin/busybox chroot /debian /usr/bin/killall -s KILL apache2
+rm /debian/var/run/apache2/apache2.pid
+
 sleep 10
 
 source /system/bin/setup_debian
