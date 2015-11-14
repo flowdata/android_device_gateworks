@@ -184,3 +184,9 @@ service apache2 /system/bin/logwrapper /system/bin/launch_apache
     class late_start
     user root
     group root
+
+service nginx /system/bin/logwrapper /system/bin/launch_nginx
+    disabled
+    class late_start
+    user root
+    group root

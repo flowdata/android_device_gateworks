@@ -11,4 +11,5 @@ echo -1000 > /proc/`cat /debian/run/postgresql/9.4-main.pid`/oom_score_adj
 
 /system/bin/start spel
 /system/bin/start apache2
+/system/bin/start nginx
 /system/bin/start sshd

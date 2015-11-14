@@ -1,0 +1,13 @@
+#!/system/bin/sh
+
+export PATH=$PATH:/bin:/usr/bin:/system/bin
+
+/system/bin/busybox chroot /debian /usr/bin/killall -s KILL nginx
+rm /debian/run/nginx.pid
+
+sleep 10
+
+source /system/bin/setup_debian
+
+/system/bin/busybox chroot /debian /usr/sbin/nginx
+
