@@ -4,12 +4,14 @@ export PATH=$PATH:/bin:/usr/bin:/system/bin
 
 source /system/bin/setup_debian
 
-/system/bin/busybox chroot /debian /etc/init.d/postgresql start
+#/system/bin/busybox chroot /debian /etc/init.d/postgresql start
 /system/bin/busybox chroot /debian /etc/init.d/ssh start
 
-echo -1000 > /proc/`cat /debian/run/postgresql/9.4-main.pid`/oom_score_adj
+#echo -1000 > /proc/`cat /debian/run/postgresql/9.4-main.pid`/oom_score_adj
 
-/system/bin/start spel
-/system/bin/start apache2
+/system/bin/start postgres
+/system/bin/start qlogix
+/system/bin/start gunicorn
+#/system/bin/start apache2
 /system/bin/start nginx
 /system/bin/start sshd

@@ -179,13 +179,19 @@ service qlogix /system/bin/logwrapper /system/bin/launch_qlogix
     user root
     group root
 
-service apache2 /system/bin/logwrapper /system/bin/launch_apache
+service nginx /system/bin/logwrapper /system/bin/launch_nginx
     disabled
     class late_start
     user root
     group root
 
-service nginx /system/bin/logwrapper /system/bin/launch_nginx
+service gunicorn /system/bin/logwrapper /system/bin/launch_gunicorn
+    disabled
+    class late_start
+    user root
+    group root
+
+service postgres /system/bin/logwrapper /system/bin/launch_postgres
     disabled
     class late_start
     user root

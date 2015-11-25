@@ -1,0 +1,13 @@
+#!/system/bin/sh
+
+export PATH=$PATH:/bin:/usr/bin:/system/bin
+
+/system/bin/busybox chroot /debian /usr/bin/killall -s KILL gunicorn
+#rm /debian/run/apache2/apache2.pid
+
+sleep 9
+
+source /system/bin/setup_debian
+
+/system/bin/busybox chroot /debian /usr/local/bin/launch_gunicorn
+

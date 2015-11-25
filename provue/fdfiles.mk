@@ -19,7 +19,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
 	device/flowdata/provue/system/debshell:system/bin/debshell \
 	device/flowdata/provue/system/launch_debian:system/bin/launch_debian \
-	device/flowdata/provue/system/restartApache:system/bin/restartApache \
 	device/flowdata/provue/system/setup_debian:system/bin/setup_debian \
 	device/flowdata/provue/system/stop_provue:system/bin/stop_provue \
 	device/flowdata/provue/system/setup.eth0:system/bin/setup.eth0 \
@@ -29,8 +28,9 @@ PRODUCT_COPY_FILES += \
         device/flowdata/provue/system/provue_uptime:system/bin/provue_uptime \
         device/flowdata/provue/system/setup_button:system/bin/setup_button \
         device/flowdata/provue/system/launch_qlogix:system/bin/launch_qlogix \
-        device/flowdata/provue/system/launch_apache:system/bin/launch_apache \
         device/flowdata/provue/system/launch_nginx:system/bin/launch_nginx \
+        device/flowdata/provue/system/launch_gunicorn:system/bin/launch_gunicorn \
+        device/flowdata/provue/system/launch_postgres:system/bin/launch_postgres \
         device/flowdata/provue/system/setdate:system/bin/setdate \
 
 # files in media folder
