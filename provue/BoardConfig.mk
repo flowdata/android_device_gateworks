@@ -7,9 +7,9 @@ include device/flowdata/provue/build_id.mk
 include device/fsl/imx6/BoardConfigCommon.mk
 include device/flowdata/provue/fdfiles.mk
 # 380MB system image (prune to size needed for system apps)
-BOARD_SYSTEMIMAGE_PARTITION_SIZE := 380M
+BOARD_SYSTEMIMAGE_PARTITION_SIZE := 398458880
 # 100MB data image (prune to size needed for pre-installed/custom data/apps)
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 100M
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 104857600
 
 BOARD_SOC_CLASS := IMX6
 BOARD_SOC_TYPE := IMX6DQ
@@ -84,11 +84,13 @@ TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
 # Generated NAND images
 #TARGET_USERIMAGES_USE_UBIFS = false
 
+TARGET_MKUBIFS_ARGS := -F -m 4096 -e 248KiB -c 8124 -x zlib
+TARGET_UBIRAW_ARGS := -m 4096 -p 256KiB -s 4096 $(UBI_ROOT_INI)
+
+
 # 2G geometry
 ifeq ($(TARGET_USERIMAGES_USE_UBIFS),true)
 UBI_ROOT_INI := device/flowdata/provue/ubi/ubinize.ini
-TARGET_MKUBIFS_ARGS := -F -m 4096 -e 248KiB -c 8124 -x zlib
-TARGET_UBIRAW_ARGS := -m 4096 -p 256KiB -s 4096 $(UBI_ROOT_INI)
 endif
 
 
