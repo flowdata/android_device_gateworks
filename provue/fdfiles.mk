@@ -33,6 +33,10 @@ PRODUCT_COPY_FILES += \
         device/flowdata/provue/system/launch_postgres:system/bin/launch_postgres \
         device/flowdata/provue/system/setdate:system/bin/setdate \
 
+# files for recovery
+PRODUCT_COPY_FILES += \
+	device/flowdata/provue/init.recovery.rc:root/init.recovery.freescale.rc 
+
 # files in media folder
 PRODUCT_COPY_FILES += \
 	device/flowdata/provue/media/bootanimation.zip:system/media/bootanimation.zip \
