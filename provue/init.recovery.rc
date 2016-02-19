@@ -197,7 +197,7 @@ service watchdogd /sbin/watchdogd 10 20
 #    user root
 #    group root
 
-service console /sbin/sh
+service console /sbin/busybox sh
 #disabled
     critical
     class default
