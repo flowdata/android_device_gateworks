@@ -1,13 +1,22 @@
-echo "Flowdata Provue Android Boot script v1.03"
+echo "Flowdata Provue Android Boot script v1.04"
 
 # set some defaults
 test -n "$fs"    || fs=ext2
 test -n "$disk"  || disk=0
+test -n "$part"  || part=1
 setenv nextcon 0
 setenv bootargs console=${console},${baudrate} ubi.mtd=2
 setenv loadaddr 10800000
 setenv fdt_addr 18000000
 setenv rd_addr  16000000
+setenv boot_img boot/uramdisk.img
+setenv kernel_img boot/uImage
+
+if itest.s "x${android_recovery}" == "x1"; then
+  setenv part 2
+  setenv boot_img uramdisk-recovery.img
+  setenv kernel_img uImage
+fi
 
 # memory configuration
 if test -n "$mem" ; then
@@ -110,13 +119,13 @@ if test -n "$dtype" ; then
 	echo "Using dtype from env: $dtype"
 else
 	echo "Detecting boot device (dtype)..."
-	if ${fs}load usb ${disk}:1 ${loadaddr} boot/uImage ; then
+	if ${fs}load usb ${disk}:${part} ${loadaddr} ${kernel_img} ; then
 		dtype=usb
-	elif ${fs}load mmc ${disk}:1 ${loadaddr} boot/uImage ; then
+	elif ${fs}load mmc ${disk}:${part} ${loadaddr} ${kernel_img} ; then
 		dtype=mmc
-	elif ${fs}load sata ${disk}:1 ${loadaddr} boot/uImage ; then
+	elif ${fs}load sata ${disk}:${part} ${loadaddr} ${kernel_img} ; then
 		dtype=sata
-	elif ubifsload ${loadaddr} boot/uImage ; then
+	elif ubifsload ${loadaddr} ${kernel_img} ; then
 		dtype=nand
 	fi
 	echo "detected dtype:$dtype"
@@ -142,11 +151,12 @@ if itest.s "x${dtype}" == "xnand" ; then
 else
 	echo "Booting from block device ${bootdev}..."
 	setenv bootargs "${bootargs}" androidboot.mode=block androidboot.bootdev=${bootdev}
-	setenv fsload "${fs}load ${dtype} ${disk}:1"
+	setenv fsload "${fs}load ${dtype} ${disk}:${part}"
+	setenv bootargs "${bootargs}" selinux=0
 fi
 
 setenv bootargs "${bootargs}" "${extra}"
-if ${fsload} ${loadaddr} boot/uImage && ${fsload} ${rd_addr} boot/uramdisk.img; then
+if ${fsload} ${loadaddr} ${kernel_img} && ${fsload} ${rd_addr} ${boot_img}; then
 	if ${fsload} ${fdt_addr} boot/${fdt_file}; then
 		echo Loaded DTB from boot/${fdt_file}
 		bootm ${loadaddr} ${rd_addr} ${fdt_addr}

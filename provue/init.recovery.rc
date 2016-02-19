@@ -198,7 +198,7 @@ service watchdogd /sbin/watchdogd 10 20
 #    group root
 
 service console /sbin/sh
-    disabled
+#disabled
     critical
     class default
     console
