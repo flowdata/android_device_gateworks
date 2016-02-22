@@ -74,7 +74,7 @@ TARGET_BOOTLOADER_CONFIG := gwventana_config
 #
 BUILD_TARGET_FS ?= ext4
 include device/fsl/imx6/imx6_target_fs.mk
-TARGET_RECOVERY_FSTAB = device/flowdata/provue/fstab_block
+TARGET_RECOVERY_FSTAB = device/flowdata/provue/fstab_recovery
 PRODUCT_COPY_FILES += device/flowdata/provue/fstab_nand:root/fstab_nand
 PRODUCT_COPY_FILES += device/flowdata/provue/fstab_block:root/fstab_block
 
