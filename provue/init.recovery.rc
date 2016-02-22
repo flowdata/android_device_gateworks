@@ -141,10 +141,10 @@ on boot
 service watchdogd /sbin/watchdogd 10 20
     class core
 
-#on fs
-#    # mount partitions
-#    symlink /fstab_${ro.bootmode} /fstab.freescale
-#    mount_all /fstab_${ro.bootmode}
+on fs
+    # mount partitions
+    symlink /fstab_${ro.bootmode} /fstab.freescale
+    mount_all /fstab_${ro.bootmode}
 
     # load various kernel modules
     # uncomment these if they are needed but be sure to also install
