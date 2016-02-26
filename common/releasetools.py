@@ -209,7 +209,7 @@ def InstallDebian(info):
     info.script.Mount("/debian")
     info.script.UnpackPackageDir("DEBIAN", "/debian")
 
-    symlinks = CopySystemFiles(info.input_zip)
+    symlinks = CopyDebianFiles(info.input_zip)
     info.script.MakeSymlinks(symlinks)
 
     Item.GetMetadata(info.input_zip)
