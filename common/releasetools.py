@@ -8,6 +8,15 @@ def IsSymlink(info):
   symlink."""
   return (info.external_attr >> 16) == 0120777
 
+def MostPopularKey(d, default):
+  """Given a dict, return the key corresponding to the largest
+  value.  Returns 'default' if the dict is empty."""
+  x = [(v, k) for (k, v) in d.iteritems()]
+  if not x: return default
+  x.sort()
+  return x[-1][1]
+
+
 
 class Item:
   """Items represent the metadata (user, group, mode) of files and
