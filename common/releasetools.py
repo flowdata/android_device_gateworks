@@ -1,5 +1,6 @@
 import common
 import fnmatch
+import copy
 
 def IsSymlink(info):
   """Return true if the zipfile.ZipInfo object passed in represents a
