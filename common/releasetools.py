@@ -221,7 +221,7 @@ def InstallDebian(info):
     info.script.MakeSymlinks(symlinks)
 
     Item.GetMetadata(info.input_zip)
-    Item.get("debian").SetPermissions(info.script)
+    Item.Get("debian").SetPermissions(info.script)
 
 
 def FullOTA_InstallEnd(info):
