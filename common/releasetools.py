@@ -1,6 +1,12 @@
 import common
 import fnmatch
 
+def IsSymlink(info):
+  """Return true if the zipfile.ZipInfo object passed in represents a
+  symlink."""
+  return (info.external_attr >> 16) == 0120777
+
+
 class Item:
   """Items represent the metadata (user, group, mode) of files and
   directories in the system image."""
