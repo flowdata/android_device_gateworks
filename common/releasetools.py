@@ -193,7 +193,7 @@ def CopyDebianFiles(input_zip, output_zip=None,
           for char in basefilename:
               if ord(char) > 128:
                   continue
-        symlinks.append((input_zip.read(info.filename),
+          symlinks.append((input_zip.read(info.filename),
                          "/debian/" + basefilename))
       else:
         info2 = copy.copy(info)
