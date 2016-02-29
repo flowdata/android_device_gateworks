@@ -189,6 +189,10 @@ def CopyDebianFiles(input_zip, output_zip=None,
     if info.filename.startswith("DEBIAN/"):
       basefilename = info.filename[7:]
       if IsSymlink(info):
+          # Deal with the fragility of android's tools WRT ISO8859-1.
+          for char in basefilename:
+              if ord(char) > 128:
+                  continue
         symlinks.append((input_zip.read(info.filename),
                          "/debian/" + basefilename))
       else:
