@@ -65,7 +65,7 @@ class Item:
 
     for line in output.split("\n"):
       if not line: continue
-      columns = line.split()
+      columns = line.split(';')
       name, uid, gid, mode = columns[:4]
       selabel = None
       capabilities = None
@@ -73,11 +73,14 @@ class Item:
       # After the first 4 columns, there are a series of key=value
       # pairs. Extract out the fields we care about.
       for element in columns[4:]:
-        key, value = element.split("=")
-        if key == "selabel":
-          selabel = value
-        if key == "capabilities":
-          capabilities = value
+          try:
+              key, value = element.split("=")
+              if key == "selabel":
+                  selabel = value
+              if key == "capabilities":
+                  capabilities = value
+          except:
+              print ("Failed to split value %r %r" % (element, columns))
 
       i = cls.ITEMS.get(name, None)
       if i is not None:
@@ -167,8 +170,11 @@ class Item:
         if item.uid != current[0] or item.gid != current[1] or \
                item.mode != current[3] or item.selabel != current[4] or \
                item.capabilities != current[5]:
-          script.SetPermissions("/"+item.name, item.uid, item.gid,
+          try:
+              script.SetPermissions("/"+item.name, item.uid, item.gid,
                                 item.mode, item.selabel, item.capabilities)
+          except:
+              print("Couldn't set permissions for %r" % item.name)
 
     recurse(self, (-1, -1, -1, -1, None, None))
 
@@ -190,14 +196,18 @@ def CopyDebianFiles(input_zip, output_zip=None,
       basefilename = info.filename[7:]
       if IsSymlink(info):
           # Deal with the fragility of android's tools WRT ISO8859-1.
+          addline = True
           for char in basefilename:
               if ord(char) >= 128:
-                  continue
+                  addline = False
+                  break
+          if not addline:
+              continue
+          data = input_zip.read(info.filename)
           for char in info.filename:
               if ord(char) > 128:
-                  continue
-          symlinks.append((input_zip.read(info.filename),
-                         "/debian/" + basefilename))
+                  addline = False
+          symlinks.append((data, "/debian/" + basefilename))
       else:
         info2 = copy.copy(info)
         fn = info2.filename = "debian/" + basefilename
