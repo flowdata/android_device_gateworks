@@ -4,6 +4,13 @@ export PATH=$PATH:/bin:/usr/bin:/system/bin
 
 source /system/bin/setup_debian
 
+
+# Recreate the host keys if they are missing,
+# as they should be the first time you boot up a new system.
+if [ -s "/debian/etc/ssh/ssh_host_ecdsa_key" ]; then
+    /system/bin/busybox chroot /debian /usr/sbin/dpkg-reconfigure openssh-server
+fi
+
 #/system/bin/busybox chroot /debian /etc/init.d/postgresql start
 /system/bin/busybox chroot /debian /etc/init.d/ssh start
 
