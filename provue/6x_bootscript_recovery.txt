@@ -9,14 +9,14 @@ setenv bootargs console=${console},${baudrate} ubi.mtd=2
 setenv loadaddr 10800000
 setenv fdt_addr 18000000
 setenv rd_addr  16000000
-setenv boot_img boot/uramdisk.img
-setenv kernel_img boot/uImage
+#setenv boot_img boot/uramdisk.img
+#setenv kernel_img boot/uImage
 
-if itest.s "x${android_recovery}" == "x1"; then
+#if itest.s "x${android_recovery}" == "x1"; then
   setenv part 2
   setenv boot_img uramdisk-recovery.img
   setenv kernel_img uImage
-fi
+#fi
 
 # memory configuration
 if test -n "$mem" ; then
