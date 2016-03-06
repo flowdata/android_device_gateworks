@@ -1,5 +1,5 @@
 #!/system/bin/sh
-export PATH=$PATH:/bin:/usr/bin:/system/bin
+export PATH=$PATH:/bin:/usr/bin:/system/bin:/usr/sbin:/sbin
 
 [ -d /debian/etc ] || /system/bin/mount -t ext4 -o noatime,nodiratime /dev/block/sda10 /debian
 [ -d /debian/data/postgresql ] || /system/bin/mount -t ext4 -o noatime,nodiratime /dev/block/sda11 /debian/data
