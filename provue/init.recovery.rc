@@ -143,8 +143,8 @@ service watchdogd /sbin/watchdogd 10 20
 
 on fs
     # mount partitions
-    symlink /fstab_${ro.bootmode} /fstab.freescale
-    mount_all /fstab_${ro.bootmode}
+    symlink /fstab_recovery_partition /fstab.freescale
+    mount_all /fstab_recovery_partition
 
     # load various kernel modules
     # uncomment these if they are needed but be sure to also install
@@ -207,6 +207,11 @@ service console /sbin/busybox sh
 
 
 service install_busybox /sbin/busybox --install /sbin
+    oneshot
+    user root
+    group root
+
+service reset_recovery /sbin/busybox cp /boot/boot/6x_bootscript-ventana.bak /boot/boot/6x_bootscript-ventana
     oneshot
     user root
     group root

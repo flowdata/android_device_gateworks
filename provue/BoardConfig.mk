@@ -77,6 +77,7 @@ include device/fsl/imx6/imx6_target_fs.mk
 TARGET_RECOVERY_FSTAB = device/flowdata/provue/fstab_recovery
 PRODUCT_COPY_FILES += device/flowdata/provue/fstab_nand:root/fstab_nand
 PRODUCT_COPY_FILES += device/flowdata/provue/fstab_block:root/fstab_block
+PRODUCT_COPY_FILES += device/flowdata/provue/fstab_recovery_partition:root/fstab_recovery_partition
 
 # we don't support sparse image.
 TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
