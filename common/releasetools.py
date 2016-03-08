@@ -249,7 +249,15 @@ def InstallDebian(info):
     Item.GetMetadata(info.input_zip)
     Item.Get("debian").SetPermissions(info.script)
 
+def LoadRecovery(info):
+    for filename in fnmatch.filter(info.input_zip.namelist(), "RECOVERY_PARTITION/*"):
+        fobj = info.input_zip.read(filename)
+        common.ZipWriteStr(info.output_zip, filename, fobj)
+    # Don't write anything out, we'll do that in coreshim
+
+
 
 def FullOTA_InstallEnd(info):
     InstallBoot(info)
     InstallDebian(info)
+    LoadRecovery(info)
