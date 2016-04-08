@@ -21,6 +21,7 @@ PRODUCT_COPY_FILES += \
 	device/flowdata/provue/system/launch_debian:system/bin/launch_debian \
 	device/flowdata/provue/system/setup_debian:system/bin/setup_debian \
 	device/flowdata/provue/system/stop_provue:system/bin/stop_provue \
+	device/flowdata/provue/system/reboot_provue:system/bin/reboot_provue \
 	device/flowdata/provue/system/setup.eth0:system/bin/setup.eth0 \
 	device/flowdata/provue/system/setup.eth1:system/bin/setup.eth1 \
         device/flowdata/provue/system/stop_adbd:system/bin/stop_adbd \
