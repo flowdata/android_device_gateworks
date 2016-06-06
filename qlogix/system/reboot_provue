@@ -3,7 +3,7 @@
 export PATH=$PATH:/bin:/usr/bin:/system/bin
 
 #source /system/bin/setup_debian
-
+sleep 60
 /system/bin/stop
 /system/bin/busybox chroot /debian /etc/init.d/postgresql stop
 /system/bin/busybox chroot /debian /etc/init.d/apache2 stop
