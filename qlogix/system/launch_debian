@@ -1,0 +1,23 @@
+#!/system/bin/sh
+
+export PATH=$PATH:/bin:/usr/bin:/system/bin:/usr/sbin:/sbin
+
+source /system/bin/setup_debian
+
+
+# Recreate the host keys if they are missing,
+# as they should be the first time you boot up a new system.
+[ -s /debian/etc/ssh/ssh_host_ecdsa_key ] || /system/bin/busybox chroot /debian /usr/sbin/dpkg-reconfigure openssh-server
+
+
+#/system/bin/busybox chroot /debian /etc/init.d/postgresql start
+/system/bin/busybox chroot /debian /etc/init.d/ssh start
+
+#echo -1000 > /proc/`cat /debian/run/postgresql/9.4-main.pid`/oom_score_adj
+
+/system/bin/start postgres
+/system/bin/start qlogix
+/system/bin/start gunicorn
+#/system/bin/start apache2
+/system/bin/start nginx
+/system/bin/start sshd

@@ -1,0 +1,55 @@
+#!/system/bin/sh
+
+export IPADDR=192.168.1.2
+export GATEWAY=192.168.1.1
+export MASK=255.255.255.0
+export DNS1=8.8.4.4
+export DNS2=8.8.8.8
+
+if [ -e /data/statnet/ipaddress ];
+  then
+    export IPADDR=`cat /data/statnet/ipaddress`
+fi
+
+if [ -e /data/statnet/gateway ];
+  then
+    export GATEWAY=`cat /data/statnet/gateway`
+fi
+
+if [ -e /data/statnet/mask ];
+  then
+    export MASK=`cat /data/statnet/mask`
+fi
+
+if [ -e /data/statnet/dns1 ];
+  then
+    export DNS1=`cat /data/statnet/dns1`
+fi
+
+if [ -e /data/statnet/dns2 ];
+  then
+    export DNS2=`cat /data/statnet/dns2`
+fi
+
+netcfg eth0 up
+ifconfig eth0 ${IPADDR} netmask ${MASK}
+route add default gw ${GATEWAY} dev eth0
+
+# Need to revisit this, it's not exactly secure, then again, neither is android hostap's normal iptables settings...
+iptables -F
+iptables -F -t nat
+iptables --policy FORWARD ACCEPT
+iptables -A FORWARD -i eth0 -o eth0 -j DROP
+iptables -t nat -A POSTROUTING -o eth0 -j SNAT --to-source ${IPADDR}
+
+setprop net.dns1 ${DNS1}
+setprop dhcp.eth0.dns1 ${DNS1}
+setprop dhcp.eth0.dns2 ${DNS2}
+
+
+setprop dhcp.eth0.ipaddress "${IPADDR}"
+setprop dhcp.eth0.gateway "${GATEWAY}"
+setprop dhcp.eth0.mask "${MASK}"
+setprop dhcp.eth0.leasetime "691200"
+setprop dhcp.eth0.server "${DNS1}"
+setprop dhcp.eth0.result "ok"

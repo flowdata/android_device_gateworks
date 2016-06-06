@@ -1,0 +1,6 @@
+#!/system/bin/sh
+
+export PATH=$PATH:/bin:/usr/bin
+source /system/bin/setup_debian
+
+/system/bin/busybox chroot /debian /bin/bash

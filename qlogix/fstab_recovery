@@ -1,0 +1,22 @@
+# Android fstab file.
+#<src>                                                  <mnt_point>         <type>    <mnt_flags and options>                       <fs_mgr_flags>
+# The filesystem that contains the filesystem checker binary (typically /system) cannot
+# specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
+
+/devices/soc0/soc.1/2100000.aips-bus/2198000.usdhc/mmc_host auto vfat defaults voldmanaged=extsd:auto
+/devices/soc0/soc.1/2100000.aips-bus/2184000.usb            auto vfat defaults voldmanaged=udisk:auto
+/devices/soc0/soc.1/2100000.aips-bus/2184200.usb            auto vfat defaults voldmanaged=udisk1:auto
+/devices/soc0/soc.1/2200000.sata/ahci                       auto vfat defaults voldmanaged=sata:auto
+
+
+/dev/block/sda6	/system      ext4    rw                                                                               wait
+/dev/block/sda5	/data        ext4    nosuid,nodev,nodiratime,noatime,noauto_da_alloc,errors=panic                     wait,encryptable=footer
+/dev/block/sda7	/cache       ext4    nosuid,nodev                                                                     wait
+/dev/block/sda8	/device      ext4    ro,nosuid,nodev                                                                  wait
+/dev/block/sda1	/boot        ext4    defaults                                                                         defaults
+/dev/block/sda2	/recovery    ext4    defaults                                                                         defaults
+/dev/block/sda9	/misc        emmc    defaults                                                                         defaults
+/dev/block/sda10	/debian        ext4    discard,nodiratime,noatime,defaults                                                                         defaults
+/dev/block/sda11	/debian/data        ext4    discard,nosuid,nodev,nodiratime,noatime,noauto_da_alloc                                                                        wait
+# uncomment if you wish to utilize NAND storage (must have valid ubi)
+#/dev/ubi0_0     /mnt/media_rw/nand      ubifs 	ro                                      wait

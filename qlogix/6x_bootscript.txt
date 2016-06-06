@@ -1,0 +1,174 @@
+echo "Flowdata Qlogix Android Boot script v1.05"
+
+# set some defaults
+test -n "$fs"    || fs=ext2
+test -n "$disk"  || disk=0
+test -n "$part"  || part=1
+setenv nextcon 0
+setenv bootargs console=${console},${baudrate} ubi.mtd=2
+setenv loadaddr 10800000
+setenv fdt_addr 18000000
+setenv rd_addr  16000000
+setenv boot_img boot/uramdisk.img
+setenv kernel_img boot/uImage
+
+if itest.s "x${android_recovery}" == "x1"; then
+  setenv part 2
+  setenv boot_img uramdisk-recovery.img
+  setenv kernel_img uImage
+fi
+
+# memory configuration
+if test -n "$mem" ; then
+  echo "using mem from env: $mem"
+else
+  if itest.s "x${mem_mb}" == "x512" ; then
+    echo "Detected 512MB DRAM - adjusting GPU memory allocation"
+    setenv mem "galcore.contiguousSize=0x6000000 cma=256M"
+  else
+    setenv mem "cma=384M"
+  fi
+fi
+setenv bootargs "${bootargs}" "${mem}"
+
+# detect displays in the following priority: HDMI, LVDS
+# setenv display to override detection for a single display
+# or setenv video if you want multiple displays
+if test -n "$video" ; then
+  echo "using video config from env: $video"
+  setenv bootargs "${bootargs}" "${video}"
+else
+  if test -n "$display" ; then
+    echo "using display from env: $display"
+  elif test -n "$panel" ; then
+    echo "using display from env: $panel"
+    setenv display "$panel"
+  else
+    echo "Detecting displays..."
+    i2c dev 2
+    if hdmidet ; then
+	echo "  HDMI detected"
+	setenv display "HDMI"
+    elif i2c probe 0x04 ; then
+	echo "  Freescale MXC-LVDS1 detected"
+	setenv display "LVDS"
+    elif i2c probe 0x14 ; then
+	echo "  DLC800FIGT3 detected"
+	setenv display "LVDS"
+    elif i2c probe 0x38 ; then
+	echo "  DLC700JMGT4 detected"
+	setenv display "LVDS"
+    fi
+  fi
+
+  # configure displays
+  echo "Configuring kernel bootargs for display(s): $display"
+  for p in ${display}; do
+    if itest.s "x${p}" == "xHannstar-XGA" ; then
+	setenv ptype "LVDS"
+    elif itest.s "x${p}" == "xDLC700JMGT4" ; then
+	setenv ptype "LVDS"
+    elif itest.s "x${p}" == "xDLC800FIGT3" ; then
+	setenv ptype "LVDS"
+    elif itest.s "x${p}" == "xLVDS" ; then
+	setenv ptype "LVDS"
+    elif itest.s "x${p}" == "xHDMI" ; then
+	setenv ptype "HDMI"
+	test -n "$hdmi" || hdmi=1080p
+	if itest.s "x${hdmi}" == "x1080p" ; then
+		setenv hdmi "1920x1080M@60"
+	elif itest.s "x${hdmi}" == "x720p" ; then
+		setenv hdmi "1280x720M@60"
+	elif itest.s "x${hdmi}" == "x480p" ; then
+		setenv hdmi "720x480M@60"
+	fi
+    else
+        echo "${p} not supported"
+    fi
+
+    if itest.s "x${ptype}" == "xLVDS" ; then
+	echo "  mxcfb${nextcon}: LVDS ($p)"
+	setenv bootargs "${bootargs}" video=mxcfb${nextcon}:dev=ldb,bpp=32,if=RGB666
+	setexpr nextcon $nextcon + 1
+    elif itest.s "x${ptype}" == "xHDMI" ; then
+	echo "  mxcfb${nextcon}: HDMI ($hdmi)"
+	setenv bootargs "${bootargs}" video=mxcfb${nextcon}:dev=hdmi,bpp=32,${hdmi},if=RGB24
+	setexpr nextcon $nextcon + 1
+    fi
+
+  done
+
+  # disable remaining mxcfb devices
+  while test "4" -ne $nextcon ; do
+	setenv bootargs "${bootargs}" video=mxcfb${nextcon}:off
+	setexpr nextcon $nextcon + 1
+  done
+fi
+
+# set minimum GPU frequency scaling
+setenv bootargs "${bootargs}" "galcore.initgpu3DMinClock=3"
+
+# detect dtype and bootdev by looking for kernel on media the bootloader
+# has mounted (in order of preference: usb/mmc/sata)
+#
+# This assumes the bootloader has already started the respective subsystem
+# or mounted the filesystem if appropriate to get to this bootscript
+#
+# To Speed up boot set dtype manually
+if test -n "$dtype" ; then
+	echo "Using dtype from env: $dtype"
+else
+	echo "Detecting boot device (dtype)..."
+	if ${fs}load usb ${disk}:${part} ${loadaddr} ${kernel_img} ; then
+		dtype=usb
+	elif ${fs}load mmc ${disk}:${part} ${loadaddr} ${kernel_img} ; then
+		dtype=mmc
+	elif ${fs}load sata ${disk}:${part} ${loadaddr} ${kernel_img} ; then
+		dtype=sata
+	elif ubifsload ${loadaddr} ${kernel_img} ; then
+		dtype=nand
+	fi
+	echo "detected dtype:$dtype"
+fi
+if test -n "$bootdev" ; then
+	echo "Using bootdev from env: $bootdev"
+else
+	if itest.s "x${dtype}" == "xmmc" ; then
+		bootdev=mmcblk0
+	else
+		bootdev=sda
+	fi
+fi
+
+setenv bootargs "${bootargs}" androidboot.hardware=freescale androidboot.console=${console} androidboot.product.model=${model} androidboot.serialno=${serial#} 
+
+if itest.s "x${dtype}" == "xnand" ; then
+	echo "Booting from NAND..."
+	setenv bootargs "${bootargs}" androidboot.mode=nand
+	# disable selinux until we get policy config figured out
+	setenv bootargs "${bootargs}" selinux=0
+	setenv fsload ubifsload
+else
+	echo "Booting from block device ${bootdev}..."
+	setenv bootargs "${bootargs}" androidboot.mode=block androidboot.bootdev=${bootdev}
+	setenv fsload "${fs}load ${dtype} ${disk}:${part}"
+	setenv bootargs "${bootargs}" selinux=0
+fi
+
+setenv bootargs "${bootargs}" "${extra}"
+if ${fsload} ${loadaddr} ${kernel_img} && ${fsload} ${rd_addr} ${boot_img}; then
+	if ${fsload} ${fdt_addr} boot/${fdt_file}; then
+		echo Loaded DTB from boot/${fdt_file}
+		bootm ${loadaddr} ${rd_addr} ${fdt_addr}
+	elif ${fsload} ${fdt_addr} boot/${fdt_file1}; then
+		echo Loaded DTB from boot/${fdt_file1}
+		bootm ${loadaddr} ${rd_addr} ${fdt_addr}
+	elif ${fsload} ${fdt_addr} boot/${fdt_file2}; then
+		echo Loaded DTB from boot/${fdt_file2}
+		bootm ${loadaddr} ${rd_addr} ${fdt_addr}
+	else
+		echo "Error loading device-tree"
+	fi
+else
+	echo "Error loading kernel image"
+fi
