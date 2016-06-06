@@ -28,3 +28,4 @@
 
 PRODUCT_MAKEFILES := \
   $(LOCAL_DIR)/provue/provue.mk \
+  $(LOCAL_DIR)/qlogix/qlogix.mk \
