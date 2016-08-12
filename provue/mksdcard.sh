@@ -80,7 +80,7 @@ mounts="$(grep "^$DEV" /proc/mounts | awk '{print $1}')"
 echo "Installing artifacts from $OUTDIR/"
 
 # verify build artifacts
-for i in boot/boot/uImage uramdisk-recovery.img userdata.img system.img SPL u-boot.img; do
+for i in boot/boot/uImage recovery/boot/uImage userdata.img system.img SPL u-boot.img; do
    debug "  checking file: $OUTDIR/$i"
    [ -f "$OUTDIR/$i" ] || error "Missing file: $OUTDIR/$i"
 done
@@ -117,17 +117,15 @@ echo "Partitioning..."
 # 3:extended partition table
 # 4:DATA     ext4 (remainder)
 # 5:SYSTEM   ext4 512MB
-# 6:CACHE    ext4 512MB
+# 6:CACHE    ext4 256MB
 # 7:VENDOR   ext4 10MB
-# 8:MISC     ext4 10MB
 sfdisk --force --no-reread -uM $DEV >>$LOG 2>&1 << EOF
 ,20,83,*
 ,20,83
 ,1024,E
 ,,83
 ,512,83
-,50,83
-,10,83
+,256,83
 ,10,83
 EOF
 [ $? -eq 0 ] || error "sfdisk failed"
@@ -157,7 +155,7 @@ mkdir $mnt
 }
 
 # sanity-check: verify partitions present
-for n in `seq 1 8` ; do
+for n in `seq 1 7` ; do
    [ -e ${DEV}$n ] || error "  missing ${DEV}$n"
 done
 debug "  Partitioning complete"
@@ -167,7 +165,6 @@ mkfs.ext4 -q -L BOOT ${DEV}1 || error "mkfs BOOT"
 mkfs.ext4 -q -L RECOVER ${DEV}2 || error "mkfs RECOVER"
 mkfs.ext4 -q -L CACHE ${DEV}6 || error "mkfs CACHE"
 mkfs.ext4 -q -L VENDOR ${DEV}7 || error "mkfs VENDOR"
-mkfs.ext4 -q -L MISC ${DEV}8 || error "mkfs MISC"
 
 echo "Mounting partitions..."
 for n in 1 2 ; do
@@ -183,8 +180,7 @@ sync && umount ${DEV}1 || error "failed umount"
 
 # RECOVERY: bootscripts, kernel, and ramdisk-recovery.img
 echo "Writing RECOVERY partition..."
-cp -rfv $OUTDIR/boot/boot/uImage ${mnt}/2 >>$LOG || error
-cp -rfv $OUTDIR/uramdisk-recovery.img ${mnt}/2 >>$LOG || error
+cp -rfv $OUTDIR/recovery/boot/* ${mnt}/2 >>$LOG || error
 sync && umount ${DEV}2 || error "failed umount"
 
 # DATA: user data

@@ -7,6 +7,3 @@ endif
 endif
 
 include device/fsl-proprietary/media-profile/media-profile.mk
-include device/flowdata/bootscript.mk
-include device/flowdata/ramdisk.mk
-#include device/flowdata/ubi.mk

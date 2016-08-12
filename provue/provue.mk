@@ -16,7 +16,14 @@ PRODUCT_COPY_FILES += \
 	device/flowdata/provue/init.rc:root/init.freescale.rc \
 	device/flowdata/provue/audio_policy.conf:system/etc/audio_policy.conf \
 	device/flowdata/provue/audio_effects.conf:system/vendor/etc/audio_effects.conf \
-	device/flowdata/provue/init.sh:system/bin/init.sh
+	device/gateworks/ventana/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
+	device/gateworks/ventana/required_hardware.xml:system/etc/permissions/required_hardware.xml \
+	device/gateworks/ventana/init.rc:root/init.freescale.rc \
+	device/gateworks/ventana/init.i.MX6Q.rc:root/init.freescale.i.MX6Q.rc \
+	device/gateworks/ventana/init.i.MX6DL.rc:root/init.freescale.i.MX6DL.rc \
+	device/gateworks/ventana/audio_policy.conf:system/etc/audio_policy.conf \
+	device/gateworks/ventana/audio_effects.conf:system/vendor/etc/audio_effects.conf \
+	device/gateworks/ventana/init.sh:system/bin/init.sh
 
 PRODUCT_COPY_FILES +=	\
 	external/linux-firmware-imx/firmware/vpu/vpu_fw_imx6d.bin:system/lib/firmware/vpu/vpu_fw_imx6d.bin 	\
@@ -35,9 +42,12 @@ PRODUCT_CHARACTERISTICS := tablet
 
 PRODUCT_AAPT_CONFIG += xlarge large tvdpi hdpi
 
-# Hardware supported features
+# Hardware supported features (combined with hardware_features.xml)
 PRODUCT_COPY_FILES += \
 	frameworks/native/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
+	frameworks/native/data/etc/android.hardware.camera.xml:system/etc/permissions/android.hardware.camera.xml \
+	frameworks/native/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
+	frameworks/native/data/etc/android.hardware.ethernet.xml:system/etc/permissions/android.hardware.ethernet.xml \
 	frameworks/native/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
 	frameworks/native/data/etc/android.hardware.sensor.accelerometer.xml:system/etc/permissions/android.hardware.sensor.accelerometer.xml \
 	frameworks/native/data/etc/android.hardware.faketouch.xml:system/etc/permissions/android.hardware.faketouch.xml \
@@ -53,9 +63,10 @@ PRODUCT_COPY_FILES += \
 	frameworks/native/data/etc/android.hardware.wifi.direct.xml:system/etc/permissions/android.hardware.wifi.direct.xml \
 	frameworks/native/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
 
-# for PDK build, include only when the dir exists
-# too early to use $(TARGET_BUILD_PDK)
-ifneq ($(wildcard packages/wallpapers/LivePicker),)
-PRODUCT_COPY_FILES += \
-	packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:system/etc/permissions/android.software.live_wallpaper.xml
-endif
+HAVE_FSL_IMX_IPU := true
+TARGET_HAVE_IMX_GRALLOC := true
+TARGET_HAVE_IMX_HWCOMPOSER = true
+
+# Freescale Extended Codec support
+-include external/fsl_vpu_omx/codec_env.mk
+-include external/fsl_imx_omx/codec_env.mk

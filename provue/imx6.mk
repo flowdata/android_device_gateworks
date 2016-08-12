@@ -7,19 +7,20 @@ PRODUCT_MANUFACTURER := Freescale
 
 # Android infrastructures
 PRODUCT_PACKAGES += \
+	GateworksDemo				\
 	Launcher3				\
 	LiveWallpapers				\
 	LiveWallpapersPicker			\
 	MagicSmokeWallpapers			\
-	Gallery2				\
 	Gallery		    			\
 	Email					\
 	FSLOta					\
 	WfdSink                                 \
 	wfd                                     \
-	ethernet                                \
 	libfsl_wfd.so                           \
 	fsl.imx.jar                             \
+	libfsl_hdcp_blob.so			\
+	libstagefright_hdcp.so			\
 	hwcomposer_fsl.imx6.so                  \
 	FSLProfileApp				\
 	FSLProfileService			\
@@ -41,14 +42,18 @@ PRODUCT_PACKAGES += \
 	libion                                  \
 	display_mode_fb0.conf                   \
 	display_mode_fb2.conf                   \
-	display_mode_fb4.conf
-
-	#SoundRecorder				\
+	display_mode_fb4.conf                   \
 	Camera2					\
 	Camera					\
 	LegacyCamera                            \
 	CactusPlayer                            \
-	VideoEditor				\
+	VideoEditor				
+
+
+# Freescale Extended
+PRODUCT_PACKAGES += \
+	freescale-extended \
+	freescale-extended.xml
 
 # Debug utils
 PRODUCT_PACKAGES += \
@@ -155,7 +160,7 @@ PRODUCT_PACKAGES += \
 
 # gps related lib
 PRODUCT_PACKAGES += \
-	gps.ventana
+	gps.default
 
 # drm related lib
 PRODUCT_PACKAGES += \
@@ -264,11 +269,14 @@ omx_libs := \
 	lib_flac_parser_arm11_elinux.3.0 \
 	lib_wav_parser_arm11_elinux.3.0 \
 	lib_omx_ac3toiec937_arm11_elinux \
-        lib_omx_ec3_dec_v2_arm11_elinux \
+	lib_omx_ec3_dec_v2_arm11_elinux \
 	lib_omx_libav_video_dec_arm11_elinux \
-	libavcodec-55 \
-	libavutil-53 \
-
+	lib_omx_libav_audio_dec_arm11_elinux \
+	lib_omx_soft_hevc_dec_arm11_elinux \
+	lib_ape_parser_arm11_elinux.3.0 \
+	libavcodec \
+	libavutil \
+	libavresample \
 
 
 # Omx excluded libs
@@ -287,11 +295,16 @@ omx_excluded_libs :=					\
 	lib_ac3d_wrap_arm11_elinux_android \
         lib_ddpd_wrap_arm12_elinux_android \
         lib_ddplus_dec_v2_arm12_elinux \
+        lib_realad_wrap_arm11_elinux_android \
+        lib_realaudio_dec_v2_arm11_elinux \
+        lib_rm_parser_arm11_elinux.3.0 \
+        lib_omx_ra_dec_v2_arm11_elinux \
 
 
 PRODUCT_PACKAGES += $(omx_libs) $(omx_excluded_libs)
 
 #PRODUCT_PACKAGES += libubi ubinize ubiformat ubiattach ubidetach ubiupdatevol ubimkvol ubinfo mkfs.ubifs
+PRODUCT_PACKAGES += nandwrite flash_erase kobs-ng
 
 # FUSE based emulated sdcard daemon
 PRODUCT_PACKAGES += sdcard
@@ -326,21 +339,32 @@ PRODUCT_PACKAGES += \
     charger_res_images \
     charger
 
+PRODUCT_PACKAGES += \
+	libGLES_android
+
+PRODUCT_PACKAGES += \
+	fsck.f2fs mkfs.f2fs
+
 PRODUCT_COPY_FILES +=	\
 	device/fsl/common/input/Dell_Dell_USB_Keyboard.kl:system/usr/keylayout/Dell_Dell_USB_Keyboard.kl \
 	device/fsl/common/input/Dell_Dell_USB_Keyboard.idc:system/usr/idc/Dell_Dell_USB_Keyboard.idc \
 	device/fsl/common/input/eGalax_Touch_Screen.idc:system/usr/idc/eGalax_Touch_Screen.idc \
 	device/fsl/common/input/eGalax_Touch_Screen.idc:system/usr/idc/HannStar_P1003_Touchscreen.idc \
 	device/fsl/common/input/eGalax_Touch_Screen.idc:system/usr/idc/Novatek_NT11003_Touch_Screen.idc \
-	device/fsl/imx6/etc/init.rc:root/init.rc \
+	system/core/rootdir/init.rc:root/init.rc \
 	device/fsl/imx6/etc/apns-conf.xml:system/etc/apns-conf.xml \
 	device/fsl/imx6/etc/init.usb.rc:root/init.freescale.usb.rc \
-	device/fsl/imx6/etc/ueventd.freescale.rc:root/ueventd.freescale.rc \
+	device/gateworks/ventana/ueventd.freescale.rc:root/ueventd.freescale.rc \
 	device/fsl/imx6/etc/ppp/init.gprs-pppd:system/etc/ppp/init.gprs-pppd \
 	device/fsl/imx6/etc/ota.conf:system/etc/ota.conf \
+	device/fsl/imx6/init.recovery.imx6.rc:root/init.recovery.freescale.rc \
 	device/fsl/common/display/display_mode_fb0.conf:system/etc/display_mode_fb0.conf \
 	device/fsl/common/display/display_mode_fb2.conf:system/etc/display_mode_fb2.conf \
-	device/fsl/common/display/display_mode_fb4.conf:system/etc/display_mode_fb4.conf
+	device/fsl/common/display/display_mode_fb4.conf:system/etc/display_mode_fb4.conf \
+	device/fsl-proprietary/media-profile/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
+	device/fsl-proprietary/media-profile/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml \
+	device/fsl-proprietary/media-profile/media_profiles_720p.xml:system/etc/media_profiles_720p.xml
+
 
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise

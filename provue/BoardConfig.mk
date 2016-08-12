@@ -6,14 +6,20 @@ include device/fsl/imx6/soc/imx6dq.mk
 include device/flowdata/provue/build_id.mk
 include device/fsl/imx6/BoardConfigCommon.mk
 include device/flowdata/provue/fdfiles.mk
-# 380MB system image (prune to size needed for system apps)
-BOARD_SYSTEMIMAGE_PARTITION_SIZE := 398458880
+include device/fsl-proprietary/gpu-viv/fsl-gpu.mk
+# 360MB system image (prune to size needed for system apps)
+BOARD_SYSTEMIMAGE_PARTITION_SIZE := 377487360
 # 100MB data image (prune to size needed for pre-installed/custom data/apps)
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 104857600
 
+TARGET_RECOVERY_UI_LIB :=
 BOARD_SOC_CLASS := IMX6
 BOARD_SOC_TYPE := IMX6DQ
 PRODUCT_MODEL := Flowdata Provue
+
+USE_OPENGL_RENDERER := true
+TARGET_CPU_SMP := true
+PRODUCT_SUPPORTS_VERITY := false
 
 #
 # Kernel
@@ -28,12 +34,14 @@ TARGET_BOARD_DTS_CONFIG := \
   imx6q:imx6q-gw53xx.dtb \
   imx6q:imx6q-gw52xx.dtb \
   imx6q:imx6q-gw51xx.dtb \
+  imx6q:imx6q-gw553x.dtb \
   imx6q:imx6q-gw552x.dtb \
   imx6q:imx6q-gw551x.dtb \
   imx6dl:imx6dl-gw54xx.dtb \
   imx6dl:imx6dl-gw53xx.dtb \
   imx6dl:imx6dl-gw52xx.dtb \
   imx6dl:imx6dl-gw51xx.dtb \
+  imx6dl:imx6dl-gw553x.dtb \
   imx6dl:imx6dl-gw552x.dtb \
   imx6dl:imx6dl-gw551x.dtb
 
@@ -54,14 +62,32 @@ TARGET_BOARD_DTS_CONFIG := \
 #  kernel_imx/drivers/net/wireless/rt2x00/rt2x00lib.ko:system/lib/modules/
 
 BOARD_SEPOLICY_DIRS := \
-  device/fsl/ventana/sepolicy
+  device/fsl/imx6/sepolicy \
+  device/gateworks/ventana/sepolicy
 
 BOARD_SEPOLICY_UNION := \
-  app.te \
-  file_contexts \
-  fs_use \
+  board_setup.te \
+  gateworks_util.te \
+  domain.te \
+  system_app.te \
+  system_server.te \
   untrusted_app.te \
-  genfs_contexts
+  sensors.te \
+  init_shell.te \
+  bluetooth.te \
+  kernel.te \
+  mediaserver.te \
+  file_contexts \
+  genfs_contexts \
+  fs_use \
+  rild.te \
+  init.te \
+  netd.te \
+  bootanim.te \
+  dnsmasq.te \
+  recovery.te \
+  device.te \
+  zygote.te
 
 #
 # Bootloader
@@ -84,6 +110,7 @@ TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
 
 # Generated NAND images
 #TARGET_USERIMAGES_USE_UBIFS = false
+TARGET_USERIMAGES_USE_EXT4 := true
 
 TARGET_MKUBIFS_ARGS := -F -m 4096 -e 248KiB -c 8124 -x zlib
 TARGET_UBIRAW_ARGS := -m 4096 -p 256KiB -s 4096 $(UBI_ROOT_INI)
@@ -93,21 +120,21 @@ TARGET_UBIRAW_ARGS := -m 4096 -p 256KiB -s 4096 $(UBI_ROOT_INI)
 ifeq ($(TARGET_USERIMAGES_USE_UBIFS),true)
 UBI_ROOT_INI := device/flowdata/provue/ubi/ubinize.ini
 endif
+# we don't support sparse image.
+TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
 
 
 #
 # Wireless
 #
-BOARD_WPA_SUPPLICANT_DRIVER      := NL80211
-WPA_SUPPLICANT_VERSION           := VER_0_8_X
-BOARD_WLAN_DEVICE                := wl12xx_mac80211
-BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_wl12xx
-SKIP_WPA_SUPPLICANT_RTL          := y
-SKIP_WPA_SUPPLICANT_CONF         := y
+# STA
+BOARD_WPA_SUPPLICANT_DRIVER      ?= NL80211
+BOARD_WPA_SUPPLICANT_PRIVATE_LIB ?= private_lib_driver_cmd
+WPA_SUPPLICANT_VERSION           ?= VER_2_1_DEVEL
 # AP
-HOSTAPD_VERSION                  := VER_0_8_x
-BOARD_HOSTAPD_DRIVER             := NL80211
-BOARD_HOSTAPD_PRIVATE_LIB        := lib_driver_cmd_wl12xx
+HOSTAPD_VERSION                  ?= VER_0_8_x
+BOARD_HOSTAPD_DRIVER             ?= NL80211
+BOARD_HOSTAPD_PRIVATE_LIB        ?= private_lib_driver_cmd
 
 
 #
@@ -119,7 +146,7 @@ BOARD_MODEM_HAVE_DATA_DEVICE := false
 #
 # GPS
 #
-USE_ATHR_GPS_HARDWARE := true
+BOARD_HAS_GPS_HARDWARE := true
 
 
 #
@@ -132,13 +159,7 @@ BOARD_HAS_SENSOR := true
 # Bluetooth
 #
 BOARD_HAVE_BLUETOOTH := true
-BOARD_HAVE_BLUETOOTH_BCM := true
-# This requires a patched Bluedroid that supports bt_usb via the broadcom
-# vendor lib
 BLUETOOTH_HCI_USE_USB := true
-# if not defined uses hardware/broadcom/libbt/include/vnd_generic_usb.txt
-#BOARD_BLUEDROID_VENDOR_CONF := device/gateworks/ventana/bluetooth/vnd_ventana.
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/flowdata/provue/bluetooth
 
 
 # GPU

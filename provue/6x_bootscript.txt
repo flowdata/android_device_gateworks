@@ -1,22 +1,26 @@
-echo "Flowdata Provue Android Boot script v1.05"
+echo "Flowdata Provue Android Boot script v1.06"
+
+# bootmode: We use EEPROM byte at 0x51 addr 0x80 (part of volatile user-key
+# area) to signify a mode of boot:
+#  1 = boot recovery
+#  else normal
+#
+i2c dev 0
+i2c read 51 80 1 ${loadaddr} # read 1 byte from 0x80 to loadaddr
+if itest.b *${loadaddr} == "01" ; then
+	setenv android_bootmode 1
+fi
 
 # set some defaults
 test -n "$fs"    || fs=ext2
 test -n "$disk"  || disk=0
-test -n "$part"  || part=1
+test -n "$part"  || part=0
 setenv nextcon 0
 setenv bootargs console=${console},${baudrate} ubi.mtd=2
 setenv loadaddr 10800000
 setenv fdt_addr 18000000
 setenv rd_addr  16000000
-setenv boot_img boot/uramdisk.img
-setenv kernel_img boot/uImage
-
-if itest.s "x${android_recovery}" == "x1"; then
-  setenv part 2
-  setenv boot_img uramdisk-recovery.img
-  setenv kernel_img uImage
-fi
+setenv ramdisk uramdisk.img
 
 # memory configuration
 if test -n "$mem" ; then
@@ -105,9 +109,6 @@ else
   done
 fi
 
-# set minimum GPU frequency scaling
-setenv bootargs "${bootargs}" "galcore.initgpu3DMinClock=3"
-
 # detect dtype and bootdev by looking for kernel on media the bootloader
 # has mounted (in order of preference: usb/mmc/sata)
 #
@@ -145,8 +146,6 @@ setenv bootargs "${bootargs}" androidboot.hardware=freescale androidboot.console
 if itest.s "x${dtype}" == "xnand" ; then
 	echo "Booting from NAND..."
 	setenv bootargs "${bootargs}" androidboot.mode=nand
-	# disable selinux until we get policy config figured out
-	setenv bootargs "${bootargs}" selinux=0
 	setenv fsload ubifsload
 else
 	echo "Booting from block device ${bootdev}..."
@@ -156,15 +155,39 @@ else
 fi
 
 setenv bootargs "${bootargs}" "${extra}"
-if ${fsload} ${loadaddr} ${kernel_img} && ${fsload} ${rd_addr} ${boot_img}; then
-	if ${fsload} ${fdt_addr} boot/${fdt_file}; then
-		echo Loaded DTB from boot/${fdt_file}
+
+# Recovery mode: boot using kernel/dtb/ramdisk from partition 2
+if itest.s "x${android_bootmode}" == "x1"; then
+  echo ""
+  echo "----------------------------------------------------------"
+  echo "-               **** Android Recovery ****               -"
+  echo "----------------------------------------------------------"
+  echo ""
+  sleep 2
+  # remount recovery partition or continue
+  if itest.s "x${dtype}" == "xnand" ; then
+    ubifsumount
+    ubifsmount ubi0:recovery
+    echo "Booting recovery from ubi0:recovery"
+  else
+    echo "Booting recovery from mmc 0:2"
+    setenv fsload "${fs}load mmc ${disk}:2"
+  fi
+  setenv bootdir
+  #setenv ramdisk uramdisk-recovery.img
+  # for now, disable selinux until contexts in recovery are fixed
+  setenv bootargs "${bootargs}" "selinux=0"
+fi
+
+if ${fsload} ${loadaddr} ${bootdir}/uImage && ${fsload} ${rd_addr} ${bootdir}/${ramdisk}; then
+	if ${fsload} ${fdt_addr} ${bootdir}/${fdt_file}; then
+		echo Loaded DTB from ${bootdir}/${fdt_file}
 		bootm ${loadaddr} ${rd_addr} ${fdt_addr}
-	elif ${fsload} ${fdt_addr} boot/${fdt_file1}; then
-		echo Loaded DTB from boot/${fdt_file1}
+	elif ${fsload} ${fdt_addr} ${bootdir}/${fdt_file1}; then
+		echo Loaded DTB from ${bootdir}/${fdt_file1}
 		bootm ${loadaddr} ${rd_addr} ${fdt_addr}
-	elif ${fsload} ${fdt_addr} boot/${fdt_file2}; then
-		echo Loaded DTB from boot/${fdt_file2}
+	elif ${fsload} ${fdt_addr} ${bootdir}/${fdt_file2}; then
+		echo Loaded DTB from ${bootdir}/${fdt_file2}
 		bootm ${loadaddr} ${rd_addr} ${fdt_addr}
 	else
 		echo "Error loading device-tree"
