@@ -16,14 +16,14 @@ PRODUCT_COPY_FILES += \
 	device/flowdata/provue/init.rc:root/init.freescale.rc \
 	device/flowdata/provue/audio_policy.conf:system/etc/audio_policy.conf \
 	device/flowdata/provue/audio_effects.conf:system/vendor/etc/audio_effects.conf \
-	device/gateworks/ventana/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
-	device/gateworks/ventana/required_hardware.xml:system/etc/permissions/required_hardware.xml \
-	device/gateworks/ventana/init.rc:root/init.freescale.rc \
-	device/gateworks/ventana/init.i.MX6Q.rc:root/init.freescale.i.MX6Q.rc \
-	device/gateworks/ventana/init.i.MX6DL.rc:root/init.freescale.i.MX6DL.rc \
-	device/gateworks/ventana/audio_policy.conf:system/etc/audio_policy.conf \
-	device/gateworks/ventana/audio_effects.conf:system/vendor/etc/audio_effects.conf \
-	device/gateworks/ventana/init.sh:system/bin/init.sh
+	device/flowdata/provue/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
+	device/flowdata/provue/required_hardware.xml:system/etc/permissions/required_hardware.xml \
+	device/flowdata/provue/init.rc:root/init.freescale.rc \
+	device/flowdata/provue/init.i.MX6Q.rc:root/init.freescale.i.MX6Q.rc \
+	device/flowdata/provue/init.i.MX6DL.rc:root/init.freescale.i.MX6DL.rc \
+	device/flowdata/provue/audio_policy.conf:system/etc/audio_policy.conf \
+	device/flowdata/provue/audio_effects.conf:system/vendor/etc/audio_effects.conf \
+	device/flowdata/provue/init.sh:system/bin/init.sh
 
 PRODUCT_COPY_FILES +=	\
 	external/linux-firmware-imx/firmware/vpu/vpu_fw_imx6d.bin:system/lib/firmware/vpu/vpu_fw_imx6d.bin 	\

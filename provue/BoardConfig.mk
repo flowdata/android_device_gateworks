@@ -63,7 +63,7 @@ TARGET_BOARD_DTS_CONFIG := \
 
 BOARD_SEPOLICY_DIRS := \
   device/fsl/imx6/sepolicy \
-  device/gateworks/ventana/sepolicy
+  device/flowdata/provue/sepolicy
 
 BOARD_SEPOLICY_UNION := \
   board_setup.te \
