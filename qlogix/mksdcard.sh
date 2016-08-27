@@ -1,6 +1,6 @@
 #!/bin/bash
 
-product=ventana
+product=qlogix
 verbose=0
 bootloader=1
 minmb=1500

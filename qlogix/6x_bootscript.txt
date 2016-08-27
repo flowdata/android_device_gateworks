@@ -1,4 +1,4 @@
-echo "Gateworks Ventana Android 5.x Boot script v1.03"
+echo "Gateworks Qlogix Android 5.x Boot script v1.03"
 
 # bootmode: We use EEPROM byte at 0x51 addr 0x80 (part of volatile user-key
 # area) to signify a mode of boot:

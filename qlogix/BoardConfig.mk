@@ -3,7 +3,7 @@
 #
 
 include device/fsl/imx6/soc/imx6dq.mk
-include device/flowdata/ventana/build_id.mk
+include device/flowdata/qlogix/build_id.mk
 include device/fsl/imx6/BoardConfigCommon.mk
 include device/fsl-proprietary/gpu-viv/fsl-gpu.mk
 # 360MB system image (prune to size needed for system apps)
@@ -14,7 +14,7 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 104857600
 TARGET_RECOVERY_UI_LIB :=
 BOARD_SOC_CLASS := IMX6
 BOARD_SOC_TYPE := IMX6DQ
-PRODUCT_MODEL := Gateworks Ventana
+PRODUCT_MODEL := Flowdata QLogiX
 
 USE_OPENGL_RENDERER := true
 TARGET_CPU_SMP := true
@@ -62,7 +62,7 @@ TARGET_BOARD_DTS_CONFIG := \
 
 BOARD_SEPOLICY_DIRS := \
   device/fsl/imx6/sepolicy \
-  device/flowdata/ventana/sepolicy
+  device/flowdata/qlogix/sepolicy
 
 BOARD_SEPOLICY_UNION := \
   board_setup.te \
@@ -91,20 +91,20 @@ BOARD_SEPOLICY_UNION := \
 #
 # Bootloader
 #
-TARGET_BOOTLOADER_BOARD_NAME := ventana
-TARGET_BOOTLOADER_CONFIG := gwventana_config
+TARGET_BOOTLOADER_BOARD_NAME := qlogix
+TARGET_BOOTLOADER_CONFIG := gwqlogix_config
 
 #
 # Filesystem
 #
 BUILD_TARGET_FS ?= ext4
 
-TARGET_RECOVERY_FSTAB = device/flowdata/ventana/fstab_block device/flowdata/ventana/fstab_nand
-PRODUCT_COPY_FILES += device/flowdata/ventana/fstab_nand:root/fstab_nand
-PRODUCT_COPY_FILES += device/flowdata/ventana/fstab_block:root/fstab_block
+TARGET_RECOVERY_FSTAB = device/flowdata/qlogix/fstab_block device/flowdata/qlogix/fstab_nand
+PRODUCT_COPY_FILES += device/flowdata/qlogix/fstab_nand:root/fstab_nand
+PRODUCT_COPY_FILES += device/flowdata/qlogix/fstab_block:root/fstab_block
 TARGET_USERIMAGES_USE_UBIFS := true
 TARGET_USERIMAGES_USE_EXT4 := true
-UBI_ROOT_INI := device/flowdata/ventana/ubi/ubinize.ini
+UBI_ROOT_INI := device/flowdata/qlogix/ubi/ubinize.ini
 TARGET_MKUBIFS_ARGS := -F -m 4096 -e 248KiB -c 8124 -x zlib
 TARGET_UBIRAW_ARGS := -m 4096 -p 256KiB -s 4096 $(UBI_ROOT_INI)
 

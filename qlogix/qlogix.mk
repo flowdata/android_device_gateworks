@@ -1,25 +1,25 @@
 # This is a FSL Android Reference Design platform based on i.MX6Q ARD board
 # It will inherit from FSL core product which in turn inherit from Google generic
 
-$(call inherit-product, device/flowdata/ventana/imx6.mk)
+$(call inherit-product, device/flowdata/qlogix/imx6.mk)
 $(call inherit-product-if-exists,vendor/google/products/gms.mk)
 
 # Overrides
-PRODUCT_NAME := ventana
-PRODUCT_DEVICE := ventana
+PRODUCT_NAME := qlogix
+PRODUCT_DEVICE := qlogix
 PRODUCT_BRAND := Flowdata
 PRODUCT_MANUFACTURER := Gateworks
 
 # Files to copy to the root (ramdisk) and system (rom) filesystems
 PRODUCT_COPY_FILES += \
-	device/flowdata/ventana/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
-	device/flowdata/ventana/required_hardware.xml:system/etc/permissions/required_hardware.xml \
-	device/flowdata/ventana/init.rc:root/init.freescale.rc \
-	device/flowdata/ventana/init.i.MX6Q.rc:root/init.freescale.i.MX6Q.rc \
-	device/flowdata/ventana/init.i.MX6DL.rc:root/init.freescale.i.MX6DL.rc \
-	device/flowdata/ventana/audio_policy.conf:system/etc/audio_policy.conf \
-	device/flowdata/ventana/audio_effects.conf:system/vendor/etc/audio_effects.conf \
-	device/flowdata/ventana/init.sh:system/bin/init.sh
+	device/flowdata/qlogix/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
+	device/flowdata/qlogix/required_hardware.xml:system/etc/permissions/required_hardware.xml \
+	device/flowdata/qlogix/init.rc:root/init.freescale.rc \
+	device/flowdata/qlogix/init.i.MX6Q.rc:root/init.freescale.i.MX6Q.rc \
+	device/flowdata/qlogix/init.i.MX6DL.rc:root/init.freescale.i.MX6DL.rc \
+	device/flowdata/qlogix/audio_policy.conf:system/etc/audio_policy.conf \
+	device/flowdata/qlogix/audio_effects.conf:system/vendor/etc/audio_effects.conf \
+	device/flowdata/qlogix/init.sh:system/bin/init.sh
 
 PRODUCT_COPY_FILES +=	\
 	external/linux-firmware-imx/firmware/vpu/vpu_fw_imx6d.bin:system/lib/firmware/vpu/vpu_fw_imx6d.bin 	\
@@ -32,7 +32,7 @@ PRODUCT_COPY_FILES +=	\
 	device/flowdata/common/input/EP0810M09.idc:system/usr/idc/EP0810M09.idc \
 	device/flowdata/common/input/TSC2007_Touchscreen.idc:system/usr/idc/TSC2007_Touchscreen.idc
 
-DEVICE_PACKAGE_OVERLAYS := device/flowdata/ventana/overlay
+DEVICE_PACKAGE_OVERLAYS := device/flowdata/qlogix/overlay
 
 PRODUCT_CHARACTERISTICS := tablet
 

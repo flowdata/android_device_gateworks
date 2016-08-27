@@ -15,7 +15,7 @@ on init
     export EMULATED_STORAGE_SOURCE /mnt/shell/emulated
     export EMULATED_STORAGE_TARGET /storage/emulated
 
-    # Additional storage mountpoints for Ventana
+    # Additional storage mountpoints for Qlogix
     mkdir /mnt/media_rw/udisk1 0755 system system
     symlink /mnt/media_rw/udisk1 /storage/udisk1
     mkdir /mnt/media_rw/sata 0755 system system
