@@ -91,8 +91,8 @@ BOARD_SEPOLICY_UNION := \
 #
 # Bootloader
 #
-TARGET_BOOTLOADER_BOARD_NAME := qlogix
-TARGET_BOOTLOADER_CONFIG := gwqlogix_config
+TARGET_BOOTLOADER_BOARD_NAME := ventana
+TARGET_BOOTLOADER_CONFIG := gwventana_config
 
 #
 # Filesystem
