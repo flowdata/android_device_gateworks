@@ -4,6 +4,7 @@
 
 include device/fsl/imx6/soc/imx6dq.mk
 include device/flowdata/qlogix/build_id.mk
+include device/flowdata/qlogix/qfiles.mk
 include device/fsl/imx6/BoardConfigCommon.mk
 include device/fsl-proprietary/gpu-viv/fsl-gpu.mk
 # 360MB system image (prune to size needed for system apps)
@@ -102,7 +103,7 @@ BUILD_TARGET_FS ?= ext4
 TARGET_RECOVERY_FSTAB = device/flowdata/qlogix/fstab_block device/flowdata/qlogix/fstab_nand
 PRODUCT_COPY_FILES += device/flowdata/qlogix/fstab_nand:root/fstab_nand
 PRODUCT_COPY_FILES += device/flowdata/qlogix/fstab_block:root/fstab_block
-TARGET_USERIMAGES_USE_UBIFS := true
+TARGET_USERIMAGES_USE_UBIFS := false
 TARGET_USERIMAGES_USE_EXT4 := true
 UBI_ROOT_INI := device/flowdata/qlogix/ubi/ubinize.ini
 TARGET_MKUBIFS_ARGS := -F -m 4096 -e 248KiB -c 8124 -x zlib

@@ -66,7 +66,21 @@ PRODUCT_PACKAGES += \
 	i2cset					\
 	i2cdump					\
 	gsc_update				\
-	TSCalibration
+	TSCalibration				\
+	openssl					\
+	zlib					\
+	dropbear				\
+	openssh					\
+	Superuser				\
+	Widgets					\
+	libssh					\
+	ssh					\
+	sftp					\
+	scp					\
+	sshd					\
+	ssh-keygen				\
+	sshd_config				\
+	start-ssh
 
 # CANbus utils
 PRODUCT_PACKAGES += \

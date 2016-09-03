@@ -1,0 +1,8 @@
+#!/system/bin/sh
+
+export PATH=$PATH:/bin:/usr/bin:/system/bin
+busybox echo -ne \<br /\>SQL Status: \\c 
+busybox chroot /debian /etc/init.d/postgresql status
+busybox echo -ne \<br /\>Nginx Status: \\c
+busybox chroot /debian /etc/init.d/nginx status
+

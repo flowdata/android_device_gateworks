@@ -14,6 +14,8 @@ $BD6	/cache       ext4    nosuid,nodev                                          
 $BD7	/device      ext4    ro,nosuid,nodev                                                                  wait
 $BD1	/boot        ext4    defaults                                                                         defaults
 $BD2	/recovery    ext4    defaults                                                                         defaults
+$BD8    /debian     ext4     discard,nodiratime,noatime,defaults                                              defaults
+$BD9    /debian/data     ext4     discard,nodiratime,noatime,defaults                                              defaults
 
 /dev/block/zram0	none	swap	defaults zramsize=314572800
 
