@@ -25,7 +25,7 @@ PRODUCT_COPY_FILES += \
 	device/flowdata/qlogix/system/setup.eth1:system/bin/setup.eth1 \
         device/flowdata/qlogix/system/stop_adbd:system/bin/stop_adbd \
         device/flowdata/qlogix/system/start_adbd:system/bin/start_adbd \
-        device/flowdata/qlogix/system/qlogix_uptime:system/bin/provue_uptime \
+        device/flowdata/qlogix/system/provue_uptime:system/bin/provue_uptime \
         device/flowdata/qlogix/system/setup_button:system/bin/setup_button \
         device/flowdata/qlogix/system/launch_qlogix:system/bin/launch_qlogix \
         device/flowdata/qlogix/system/launch_nginx:system/bin/launch_nginx \
