@@ -357,7 +357,6 @@ PRODUCT_COPY_FILES +=	\
 	device/gateworks/ventana/ueventd.freescale.rc:root/ueventd.freescale.rc \
 	device/fsl/imx6/etc/ppp/init.gprs-pppd:system/etc/ppp/init.gprs-pppd \
 	device/fsl/imx6/etc/ota.conf:system/etc/ota.conf \
-	device/fsl/imx6/init.recovery.imx6.rc:root/init.recovery.freescale.rc \
 	device/fsl/common/display/display_mode_fb0.conf:system/etc/display_mode_fb0.conf \
 	device/fsl/common/display/display_mode_fb2.conf:system/etc/display_mode_fb2.conf \
 	device/fsl/common/display/display_mode_fb4.conf:system/etc/display_mode_fb4.conf \
@@ -365,6 +364,7 @@ PRODUCT_COPY_FILES +=	\
 	device/fsl-proprietary/media-profile/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml \
 	device/fsl-proprietary/media-profile/media_profiles_720p.xml:system/etc/media_profiles_720p.xml
 
+	#device/fsl/imx6/init.recovery.imx6.rc:root/init.recovery.freescale.rc \
 
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
