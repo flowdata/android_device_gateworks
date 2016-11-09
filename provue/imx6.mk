@@ -354,7 +354,7 @@ PRODUCT_COPY_FILES +=	\
 	system/core/rootdir/init.rc:root/init.rc \
 	device/fsl/imx6/etc/apns-conf.xml:system/etc/apns-conf.xml \
 	device/fsl/imx6/etc/init.usb.rc:root/init.freescale.usb.rc \
-	device/gateworks/ventana/ueventd.freescale.rc:root/ueventd.freescale.rc \
+	device/flowdata/provue/ueventd.freescale.rc:root/ueventd.freescale.rc \
 	device/fsl/imx6/etc/ppp/init.gprs-pppd:system/etc/ppp/init.gprs-pppd \
 	device/fsl/imx6/etc/ota.conf:system/etc/ota.conf \
 	device/fsl/common/display/display_mode_fb0.conf:system/etc/display_mode_fb0.conf \
