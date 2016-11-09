@@ -80,7 +80,8 @@ PRODUCT_PACKAGES += \
 	sshd					\
 	ssh-keygen				\
 	sshd_config				\
-	start-ssh
+	start-ssh 				\
+	coreshim
 
 # CANbus utils
 PRODUCT_PACKAGES += \
