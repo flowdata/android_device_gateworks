@@ -11,6 +11,8 @@ if itest.b *${loadaddr} == "01" ; then
 	setenv android_bootmode 1
 fi
 
+echo "bootmode ${android_bootmode}"
+
 # set some defaults
 test -n "$fs"    || fs=ext2
 test -n "$disk"  || disk=0
@@ -21,6 +23,8 @@ setenv loadaddr 10800000
 setenv fdtaddr 18000000
 setenv rdaddr  16000000
 setenv ramdisk uramdisk.img
+
+echo "bootargs 1: ${bootargs} ramdisk ${ramdisk}"
 
 # memory configuration
 if test -n "$mem" ; then
@@ -34,6 +38,8 @@ else
 	fi
 fi
 setenv bootargs "${bootargs}" "${mem}"
+
+echo "bootargs 2: ${bootargs}"
 
 # detect displays in the following priority: HDMI, LVDS
 # setenv display to override detection for a single display
@@ -111,6 +117,8 @@ else
 	done
 fi
 
+echo "bootargs 3: ${bootargs}"
+
 # detect dtype and bootdev by looking for kernel on media the bootloader
 # has mounted (in order of preference: usb/mmc/sata)
 #
@@ -135,6 +143,7 @@ else
 	echo "detected dtype:$dtype"
 fi
 
+echo "dtype ${dtype}"
 # Determine root device (bootdev) based on dtype/model
 if test -n "$bootdev" ; then
 	echo "Using bootdev from env: $bootdev"
@@ -157,6 +166,7 @@ else
 fi
 
 setenv bootargs "${bootargs}" androidboot.hardware=freescale androidboot.console=${console} androidboot.product.model=${model} androidboot.serialno=${serial#}
+echo "bootargs 4: ${bootargs}"
 
 if itest.s "x${dtype}" == "xnand" ; then
 	echo "Booting from NAND..."
@@ -169,6 +179,8 @@ else
 fi
 
 setenv bootargs "${bootargs}" "${extra}"
+
+echo "bootargs 5: ${bootargs}"
 
 # Recovery mode: boot using kernel/dtb/ramdisk from partition 2
 if itest.s "x${android_bootmode}" == "x1"; then
@@ -193,6 +205,8 @@ if itest.s "x${android_bootmode}" == "x1"; then
 	setenv bootargs "${bootargs}" "selinux=0"
 fi
 
+echo "bootargs 6: ${bootargs}"
+
 # Boot in standard mode
 if ${fsload} ${loadaddr} ${bootdir}/uImage && ${fsload} ${rdaddr} ${bootdir}/${ramdisk}; then
 	for fdt in $fdt_file $fdt_file1 $fdt_file2; do
@@ -205,3 +219,5 @@ if ${fsload} ${loadaddr} ${bootdir}/uImage && ${fsload} ${rdaddr} ${bootdir}/${r
 else
 	echo "Error loading kernel/ramdisk image"
 fi
+
+echo "bootargs 7: ${bootargs}"
