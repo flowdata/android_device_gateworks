@@ -165,7 +165,7 @@ else
 	fi
 fi
 
-setenv bootargs "${bootargs}" androidboot.hardware=freescale androidboot.console=${console} androidboot.product.model=${model} androidboot.serialno=${serial#}
+setenv bootargs "${bootargs}" androidboot.selinux=permissive androidboot.hardware=freescale androidboot.console=${console} androidboot.product.model=${model} androidboot.serialno=${serial#}
 echo "bootargs 4: ${bootargs}"
 
 if itest.s "x${dtype}" == "xnand" ; then
