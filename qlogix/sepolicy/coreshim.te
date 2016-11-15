@@ -7,11 +7,11 @@ init_daemon_domain(coreshim);
 net_domain(coreshim);
 
 
-allow coreshim device:chr_file { read write ioctl open };
-allow coreshim self:capability { net_raw net_bind_service dac_override };
-allow coreshim shell_exec:file { read execute open };
-allow coreshim sysfs:file write;
-allow coreshim system_data_file:dir { write add_name };
-allow coreshim system_data_file:file create;
+#allow coreshim device:chr_file { read write ioctl open };
+#allow coreshim self:capability { net_raw net_bind_service dac_override };
+#allow coreshim shell_exec:file { read execute open };
+#allow coreshim sysfs:file write;
+#allow coreshim system_data_file:dir { write add_name };
+#allow coreshim system_data_file:file create;
 #allow coreshim system_file:file execute_no_trans;
 
