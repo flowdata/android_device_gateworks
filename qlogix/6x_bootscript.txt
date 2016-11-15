@@ -204,6 +204,7 @@ if itest.s "x${android_bootmode}" == "x1"; then
 	# for now, disable selinux until contexts in recovery are fixed
 	setenv bootargs "${bootargs}" "selinux=0"
 fi
+setenv bootargs "${bootargs}" "selinux=0"
 
 echo "bootargs 6: ${bootargs}"
 
