@@ -5,5 +5,3 @@ permissive qlogix;
 
 init_daemon_domain(qlogix);
 net_domain(qlogix);
-
-allow qlogix {dgram_socket_class_set unix_stream_socket} {open read write};
