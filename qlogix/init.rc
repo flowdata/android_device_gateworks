@@ -318,11 +318,13 @@ service static_eth0 /system/bin/setup.eth0
 
 service coreshim /system/bin/coreshim
     class core
+    seclabel u:r:coreshim:s0
     user root
     group root
 
 service qlogix /system/bin/logwrapper /system/bin/launch_qlogix
     class late_start
+    seclabel u:r:qlogix:s0
     user root
     group root
 

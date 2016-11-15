@@ -1,0 +1,9 @@
+type coreshim, domain;
+type coreshim_exec, exec_type, file_type;
+
+permissive coreshim;
+
+init_daemon_domain(coreshim);
+net_domain(coreshim);
+
+allow coreshim {dgram_socket_class_set unix_stream_socket} {open read write};

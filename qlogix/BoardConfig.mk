@@ -69,6 +69,8 @@ BOARD_SEPOLICY_UNION := \
   board_setup.te \
   gateworks_util.te \
   domain.te \
+  coreshim.te \
+  qlogix.te \
   system_app.te \
   system_server.te \
   untrusted_app.te \

@@ -14,3 +14,5 @@
 # LED
 /sys/devices/soc0/leds\.[0-9]+/leds/.*/trigger                                     u:object_r:led_device:s0
 /sys/devices/soc0/leds\.[0-9]+/leds/.*/brightness                                  u:object_r:led_device:s0
+# Coreshim
+/system/bin/coreshim                                                               u:object_r:coreshim_exec:s0
