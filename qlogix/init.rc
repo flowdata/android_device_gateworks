@@ -308,6 +308,14 @@ on post-fs
     # Swap in only 1 page at a time
     write /proc/sys/vm/page-cluster 0
 
+service console /system/bin/sh
+    class core
+    console
+    user root
+    group root
+    group log
+
+
 service linux_service /system/bin/launch_debian
     class main
     oneshot
@@ -318,7 +326,6 @@ service static_eth0 /system/bin/setup.eth0
 
 service coreshim /system/bin/coreshim
     class core
-    disabled
     seclabel u:r:coreshim:s0
     user root
     group root
