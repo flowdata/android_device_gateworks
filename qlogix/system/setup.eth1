@@ -36,11 +36,11 @@ ifconfig eth1 ${IPADDR} netmask ${MASK}
 route add default gw ${GATEWAY} dev eth1
 
 # Need to revisit this, it's not exactly secure, then again, neither is android hostap's normal iptables settings...
-iptables -F
-iptables -F -t nat
-iptables --policy FORWARD ACCEPT
-iptables -A FORWARD -i eth1 -o eth0 -j DROP
-iptables -t nat -A POSTROUTING -o eth1 -j SNAT --to-source ${IPADDR}
+#iptables -F
+#iptables -F -t nat
+#iptables --policy FORWARD ACCEPT
+#iptables -A FORWARD -i eth1 -o eth0 -j DROP
+#iptables -t nat -A POSTROUTING -o eth1 -j SNAT --to-source ${IPADDR}
 
 setprop net.dns1 ${DNS1}
 setprop dhcp.eth1.dns1 ${DNS1}
