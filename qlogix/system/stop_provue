@@ -16,5 +16,5 @@ export PATH=$PATH:/bin:/usr/bin:/system/bin
 /system/bin/mount -o remount,ro /system
 #echo on > /sys/power/state
 #echo mem > /sys/power/state
-sync && echo 2000000000 > /sys/devices/soc0/soc.1/2100000.aips-bus/21a0000.i2c/i2c-0/0-0020/powerdown
+sync && echo 2000000000 > /sys/devices/soc0/soc.0/2100000.aips-bus/21a0000.i2c/i2c-0/0-0020/powerdown
 
